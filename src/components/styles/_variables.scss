@@ -1,0 +1,16 @@
+:root {
+  // Tema Claro (Padrão do seu Figma)
+  --bg-main: #ffffff;
+  --bg-sidebar: #f8f9fa;
+  --text-main: #000000;
+  --accent: #0b0b1a; // Cor dos botões pretos
+  --border: #e9ecef;
+}
+
+[data-theme='dark'] {
+  --bg-main: #0b0b1a;
+  --bg-sidebar: #161625;
+  --text-main: #ffffff;
+  --accent: #ffffff;
+  --border: #2d2d3f;
+}
