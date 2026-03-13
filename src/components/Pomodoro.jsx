@@ -1,34 +1,31 @@
-// components/Pomodoro.jsx
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Play, Pause, RotateCcw, Coffee } from 'lucide-react';
 
-const Pomodoro = () => {
-  const modes = {
-    foco: { label: 'Foco', time: 25 * 60 },
-    pausaCurta: { label: 'Pausa Curta', time: 5 * 60 },
-    pausaLonga: { label: 'Pausa Longa', time: 15 * 60 },
+const Pomodoro = ({ studyMode }) => {
+  const settings = {
+    Iniciante: 15,
+    Mediano: 25,
+    Avançado: 45
   };
 
-  const [mode, setMode] = useState('foco');
-  const [seconds, setSeconds] = useState(modes.foco.time);
+  const [seconds, setSeconds] = useState(settings[studyMode] * 60);
   const [isActive, setIsActive] = useState(false);
+
+  useEffect(() => {
+    setSeconds(settings[studyMode] * 60);
+    setIsActive(false);
+  }, [studyMode]);
 
   useEffect(() => {
     let interval = null;
     if (isActive && seconds > 0) {
       interval = setInterval(() => setSeconds(s => s - 1), 1000);
     } else if (seconds === 0) {
+      clearInterval(interval);
       setIsActive(false);
-      alert(`Fim do modo ${modes[mode].label}!`);
-      // Aqui você pode disparar um som de notificação
     }
     return () => clearInterval(interval);
-  }, [isActive, seconds, mode]);
-
-  const switchMode = (newMode) => {
-    setMode(newMode);
-    setSeconds(modes[newMode].time);
-    setIsActive(false);
-  };
+  }, [isActive, seconds]);
 
   const formatTime = (s) => {
     const min = Math.floor(s / 60);
@@ -37,27 +34,22 @@ const Pomodoro = () => {
   };
 
   return (
-    <div className="pomodoro-container">
-      <div className="mode-selector">
-        {Object.keys(modes).map(m => (
-          <button 
-            key={m} 
-            className={mode === m ? 'active' : ''} 
-            onClick={() => switchMode(m)}
-          >
-            {modes[m].label}
-          </button>
-        ))}
+    <div className="tool-container">
+      <div style={{ marginBottom: '20px', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <Coffee size={20} /> Tempo de Foco: {studyMode}
+      </div>
+      
+      <div className="clock-wrapper">
+        <span className="clock-background">88:88</span>
+        <h1 className="main-clock">{formatTime(seconds)}</h1>
       </div>
 
-      <div className="display">{formatTime(seconds)}</div>
-
-      <div className="controls">
-        <button onClick={() => setIsActive(!isActive)}>
-          {isActive ? 'Pausar' : 'Iniciar'}
+      <div className="controls" style={{marginTop: '30px'}}>
+        <button className="btn-main" onClick={() => setIsActive(!isActive)}>
+          {isActive ? <Pause size={20}/> : <Play size={20}/>} {isActive ? 'Pausar' : 'Iniciar'}
         </button>
-        <button onClick={() => { setIsActive(false); setSeconds(modes[mode].time); }}>
-          Reiniciar
+        <button className="btn-sec" onClick={() => {setIsActive(false); setSeconds(settings[studyMode] * 60);}}>
+          <RotateCcw size={20}/> Resetar
         </button>
       </div>
     </div>

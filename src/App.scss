@@ -1,24 +1,24 @@
-/* Importando a biblioteca DSEG7 (Segmentos Reais com Gaps) */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap');
 
 :root {
+  // TEMA ESCURO
   --bg-main: #060606;
   --bg-sidebar: #000000;
   --text-main: #ffffff;
   --text-secondary: #888888;
-  --accent-purple: #8b5cf6; 
   --border: #1a1a1a;
   --sidebar-item-active: #ffffff;
   --sidebar-text-active: #000000;
+  --purple-gradient: linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%);
 }
 
 [data-theme='light'] {
-  --bg-main: #ffffff;
-  --bg-sidebar: #f8f9fa;
+  // TEMA CLARO
+  --bg-main: #f0f2f5;
+  --bg-sidebar: #ffffff;
   --text-main: #000000;
   --text-secondary: #666666;
-  --accent-purple: #7c3aed;
-  --border: #e9ecef;
+  --border: #e0e0e0;
   --sidebar-item-active: #000000;
   --sidebar-text-active: #ffffff;
 }
@@ -27,15 +27,14 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Inter', sans-serif;
 }
 
-body, html {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+body {
   background-color: var(--bg-main);
-  transition: background 0.3s ease;
+  color: var(--text-main);
+  font-family: 'Inter', sans-serif;
+  transition: background 0.3s ease, color 0.3s ease;
+  overflow: hidden;
 }
 
 .app-container {
@@ -44,110 +43,120 @@ body, html {
   height: 100vh;
 }
 
-// SIDEBAR
+/* --- SIDEBAR --- */
 .sidebar {
-  width: 260px;
+  width: 300px;
   background-color: var(--bg-sidebar);
   border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  padding: 24px;
+  padding: 40px 24px;
 
   .logo {
     display: flex;
     align-items: center;
     gap: 12px;
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 40px;
-    color: var(--accent-purple);
-    svg { color: var(--accent-purple); }
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 50px;
+    
+    background: var(--purple-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    
+    svg { 
+      color: #8b5cf6; 
+      -webkit-text-fill-color: initial; 
+    }
   }
 
   nav {
-    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
     .nav-item {
       display: flex;
       align-items: center;
-      gap: 14px;
-      padding: 12px 16px;
-      border-radius: 8px;
+      gap: 16px;
+      padding: 18px 20px;
+      border-radius: 12px;
       cursor: pointer;
       color: var(--text-main);
-      font-size: 0.95rem;
-      margin-bottom: 5px;
+      font-size: 1.1rem;
       transition: 0.2s;
 
-      &:hover { background: rgba(255, 255, 255, 0.05); }
+      &:hover { background: rgba(139, 92, 246, 0.1); }
 
       &.active {
         background-color: var(--sidebar-item-active);
         color: var(--sidebar-text-active);
-        font-weight: 600;
+        font-weight: 700;
+        svg { color: var(--sidebar-text-active); }
       }
     }
   }
 
   .theme-section {
+    margin-top: auto;
     padding-top: 20px;
-    border-top: 1px solid var(--border);
-    p { font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 12px; }
+    p { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 12px; font-weight: 600; }
+
     .theme-buttons {
       display: flex;
-      background: #111;
+      background: var(--border);
       padding: 4px;
       border-radius: 10px;
       gap: 4px;
+
       button {
         flex: 1;
         border: none;
-        padding: 8px;
+        padding: 10px;
         border-radius: 8px;
         cursor: pointer;
-        font-size: 0.85rem;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 6px;
+        gap: 8px;
         background: transparent;
         color: var(--text-main);
-        &.active { background: var(--bg-main); }
+
+        &.active {
+          background: var(--bg-main);
+          font-weight: 600;
+        }
       }
     }
   }
 }
 
-// MAIN CONTENT
+/* --- ÁREA PRINCIPAL --- */
 .main-content {
   flex: 1;
   display: flex;
   flex-direction: column;
 
   header {
-    height: 70px;
+    height: 80px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     padding: 0 40px;
 
-    .mode-selector {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      span { font-size: 0.85rem; color: var(--text-secondary); }
-      .modes {
-        display: flex;
-        gap: 8px;
-        button {
-          padding: 6px 18px;
-          border: 1px solid var(--border);
-          background: transparent;
-          color: var(--text-main);
-          border-radius: 8px;
-          cursor: pointer;
-          font-size: 0.85rem;
-          &.active { background: var(--text-main); color: var(--bg-main); font-weight: 600; }
-        }
+    .modes button {
+      padding: 8px 22px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-main);
+      border-radius: 10px;
+      margin-left: 10px;
+      cursor: pointer;
+      &.active {
+        background: var(--sidebar-item-active);
+        color: var(--sidebar-text-active);
+        font-weight: 700;
       }
     }
   }
@@ -158,51 +167,92 @@ body, html {
     align-items: center;
     justify-content: center;
 
+    /* Estilo compartilhado para todas as ferramentas (Cronômetro, Pomo, etc) */
+    .tool-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+    }
+
     .clock-wrapper {
-  position: relative;
-  display: inline-block;
+      position: relative;
+      display: inline-block;
+      text-align: center;
 
-  .clock-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    // NOME CORRETO DA FONTE:
-    font-family: 'DSEG7-Classic', sans-serif; 
-    font-size: 12rem;
-    font-weight: 700;
-    color: var(--accent-purple);
-    opacity: 0.05; 
-    letter-spacing: 5px;
-    z-index: 0;
-    user-select: none;
-  }
+      .digital-style {
+        font-family: 'DSEG7-Classic', sans-serif !important;
+        font-size: 14rem;
+        font-weight: 700;
+        letter-spacing: 5px;
+        line-height: 1;
+      }
 
-  .main-clock {
-    position: relative;
-    // NOME CORRETO DA FONTE:
-    font-family: 'DSEG7-Classic', sans-serif;
-    font-size: 12rem;
-    font-weight: 700;
-    color: var(--accent-purple);
-    letter-spacing: 5px;
-    z-index: 1;
-    text-shadow: none; 
-  }
-}
+      .clock-background {
+        @extend .digital-style;
+        position: absolute;
+        top: 0; left: 0;
+        background: var(--purple-gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        opacity: 0.05;
+        z-index: 0;
+        user-select: none;
+      }
+
+      .main-clock {
+        @extend .digital-style;
+        position: relative;
+        z-index: 1;
+        background: var(--purple-gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+
+    /* --- ESTILO DOS BOTÕES DE CONTROLE --- */
+    .controls {
+      display: flex;
+      gap: 20px;
+
+      button {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 35px;
+        border-radius: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.2s;
+        font-size: 1rem;
+        border: none;
+        
+        &:active { transform: scale(0.95); }
+      }
+
+      .btn-main {
+        background: var(--purple-gradient);
+        color: white;
+        box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        &:hover { opacity: 0.9; transform: translateY(-2px); }
+      }
+
+      .btn-sec {
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--text-main);
+        &:hover { background: rgba(255, 255, 255, 0.05); }
+      }
+    }
   }
 }
 
 .help-icon {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  background: #1a1a1a;
-  color: white;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
+  position: fixed; bottom: 24px; right: 24px; background: #1a1a1a;
+  color: white; width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; cursor: pointer;
+  transition: 0.2s;
+  &:hover { transform: rotate(15deg) scale(1.1); }
 }
